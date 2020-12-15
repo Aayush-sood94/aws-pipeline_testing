@@ -1,0 +1,30 @@
+project:
+  name: quickstart-jfrog-artifactory
+  owner: quickstart-eng@amazon.com
+  #lambda_source_path: functions/source
+  #lambda_zip_path: functions/packages
+  s3_object_acl: public-read
+  s3_regional_buckets: True
+  s3_bucket: tcat-422383ecc658557f9a377abae675aac0  # commercial accounts
+  # s3_bucket: tcat-a3e80b6745b2547da1c745b16adf2a66    # aws-seller accounts
+  regions:
+    - us-east-1
+    #- us-gov-east-1
+    #- us-gov-west-1
+tests:
+
+   jcr-ami:
+     auth:
+       us-east-1: seller
+     parameters:
+       AvailabilityZone: "$[taskcat_genaz_1]"
+       KeyPairName: "aayush14"
+       ArtifactVersion: 7.11.5
+       RemoteAccessCidr: "0.0.0.0/0"
+       QsS3BucketName: "$[taskcat_autobucket]"
+       QsS3KeyPrefix: "quickstart-jfrog-artifactory/"
+       QsS3BucketRegion: "$[taskcat_current_region]"
+       JFrogProduct: "jfrog-artifactory-jcr"
+     template: templates/jfrog-ami-master.template.yaml
+     regions:
+       - us-east-1
